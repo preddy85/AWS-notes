@@ -1,0 +1,84 @@
+public ip and private ip:
+
+After creating aws ec2 instance we will get 2 ips
+private and public
+
+private ip is used to connect to that instance in your private network ( within that network only )
+
+public ip is used to connect from anywhere ( outside the network )
+from www also
+
+If you restart your ec2 instace , public ip will change.
+private ip will remain constant
+
+If you dont want to chaange the public ip, we need to go for elastic ip concept.
+AWS provides 5 elastic ips which can be tagged to any ec2 instance. once tagged we can use elastic ip to login into that instanse
+so, in this case even after restarting ec2 instance. public ip wont change.
+
+==============================================================================
+
+placement groups - ec2 instance 
+
+cluster: ( high perfomace )
+=========
+
+low latency:
+places in same hardware and same Avalability Zone. ( 1 rack )
+10gbps bandwidth between instances
+
+pros: Good networkk
+cons: if the rack fails, all ec2 instnances within the rack will gets lost
+
+these types of placement groups are choosed by the applications which needs low latency and high network throughput.
+================================================================
+
+spread: ( critiacl network) 
+==========
+ec2 instance spraed across multiple availability zones
+even in case of any failure, less downtime can be identified with less effect of performance
+as the instances are in many availability zones, latency will be lil more
+
+
+partition:  ( Distributed network )
+==========
+
+us-east-1a
+us-east-1b
+upto 7 partitions in each Availability zone ( AZ )
+up to 100s of ec2 instances
+ec2 instance can access partition informmation through meta data
+
+failure of partition will effect ec2 instances but not other partition.
+
+=================================
+
+
+ENI ( ELastic network interface )
+
+ENI creation gives one private adress in A.zone which can be attached to any of the instance in same A.zone and can be used as
+secondary private adress to that machine
+and can be detached ay any time and attach to diff ec2 instance also.
+we can have more control over instacnes with this ENI.
+
+use case: our applicaiton is installed in 2 ec2 instances, let say if we got issue in one ec2 instance.
+we can access same application from another ec2 instacne but with diff ip.
+to avoid this , we can use ENI . attach one secondary ip to ec2 machine
+if this ec2 instance fails...detach ENI ( secondary ip from this failed ec2 insyacne ) and attach to another ec2 instance
+amd access application with same secondary ip ( ENi Ip)
+===========================================
+Ec2 Hibernation:
+
+ec2 hibernation will not actually reboot the os ( operating system ) but it will just store the ec2 instance RAM dump in EBS encrypted root volume and
+start our instance.
+
+ec2 instance stays in hibernation state not more than 150 days. and applicable only for the instacne under 150gm ram.
+
+Application has lower downtime if we do hiberation instaed of stop/start instance.
+
+uptime commadn will show last restart time of instacne even if u do hibernation.
+
+=================================================================
+
+
+
+
