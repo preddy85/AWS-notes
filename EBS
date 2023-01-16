@@ -1,0 +1,55 @@
+Elastic bean stalk - 
+
+Elastic bean stalk volume is a network drive which can be attached to running instances
+this will allow us to persist the instance volume after the instace termination.
+
+they can be mounted to one instance at a time.
+EBS volumme in us-east-1a can be attached to the instance only in us-east-1a ( Both should be in same Avai zone )
+that means they are bound to specific availability zone.
+
+30GB of general purpose SSD will comes under freer trail
+anything more than that will be chargable
+
+EBS voume - think as network USB stick
+
+we can attach 2 volumes to single instance and can detach whenever u want.
+
+we need to define below 2 parameters for EBS volumem provision
+IOPS - speed 
+size 
+
+ec2 instance -------------------------------- EBS volume
+               *network speed ( IOPS)
+               *not attching physically so 
+               easy to detach and attch to another instance
+               
+----------------------------------------------------------
+controlling EBS behaviour :
+
+
+Basically ec2 instance contains root volume and the volumeu attach (EBS volume )
+whenever we terminate ec2 volume , root volume of instance will gets deleted.
+
+to preserve the root volume of ec2 instance even after termination we need to Disable the ( Delete on termination ) in EBS volumes.
+-------------------------------------------------------
+
+EBS snapshots:
+
+we can take backup of EBS volume dump and store in the form of EBS snapshots.
+and we can restore this snapshop in different availability zones also.
+
+us-east-1a
+EBS volume       -------------- ( restore this snapshop in another region us-east-1b)
+( take snapshopt)
+
+features of EBS snapshots:
+
+EBS snapshots can be archeived. and if u delete accidentely, they will preset in recyle bin for 1day- 1year ( depends on configuration )
+archieve may take 24-72 hrs to use
+Moving snapshots to archieve will save us to pay more ( < 75% than normal snapshots)
+
+Fast snapshot restore - we have to pay for this option to retrive snapshot asap.
+$$$
+
+=================================================
+
